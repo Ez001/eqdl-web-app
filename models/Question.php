@@ -30,6 +30,14 @@
 			
 			return $res[ 'total' ] ?? 0;
 	   }
+		
+		function getById( array $dt )
+	   {
+			$sql = "SELECT * FROM $this->table WHERE id = ?";
+			$res = $this->fetchData( $sql, $dt );
+			
+			return $res ?? [];
+	   }
 
 		function getByCourseCode( array $dt )
 	   {
