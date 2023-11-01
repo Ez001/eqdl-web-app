@@ -3,13 +3,11 @@
    Name: Ezra Adamu
    Email: ezra00100@gmail.com
    Date created: 20/10/2023 
-   Date modified: 25/10/2023
+   Date modified: 01/11/2023
 */
 
 $( document ).ready( () => {
    const setCourseTopics = ( data ) => {
-      /* console.log( data );
-      return; */
       data = JSON.parse( data );
 
       if ( data )
@@ -30,15 +28,25 @@ $( document ).ready( () => {
    });
 });
 
-$( document ).on( 'click', '#gen_question_btn', ( e ) => {
+const genQuestions = ( data ) => {
+   data = JSON.parse( data );
+   //console.log( data );
+
+   if ( data )
+   {
+      data.status ? $( `#print_questions_btn` ).removeClass( 'invisible' ) : $( `#print_questions_btn` ).addClass( 'invisible' );
+   }
+};
+
+$( document ).on( 'click', '#gen_questions_btn', ( e ) => {
    //create new array
    var cs_ids_arr = [];
 
    $( '.no_of_qt' ).map( ( i, el ) => {
       const id = el.dataset.id;
-      const topic_ct = el.value;
+      const topic_ct = parseInt( el.value );
 
-      topic_ct ? 
+      topic_ct > 0 ? 
          cs_ids_arr.push( { 'id' : id, 'topic_ct' : topic_ct } )
       : '';
    });
@@ -46,6 +54,6 @@ $( document ).on( 'click', '#gen_question_btn', ( e ) => {
    //make API call
    makeAjaxCall( '', 'POST', { 'gen_questions' : true, 'cs_ids_arr' : cs_ids_arr }, true ).
    then( ( data ) => 
-      console.log( data )
+      genQuestions( data )
    );
 });

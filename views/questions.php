@@ -21,13 +21,7 @@
                            <?= $web_app->loadCourses( $course_arr, 0 ) ?>
                         </select>
                      </div>
-                     <?php
-                        //echo 'Testing Algo</br></br>';
-                        $array = range( 1, 20 );
-                        $array = $quest->fisherYatesShuffle( $array );
-                        //print_r( $array );
-                        print_r( $_SESSION[ 'cs_ids_arr' ] ?? []  );
-                     ?>
+                     
                      <div id="alert_msg"></div>
 
                      <ul id='qt_topics_div' class="list-group">

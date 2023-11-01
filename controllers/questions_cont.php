@@ -3,7 +3,7 @@
 	#   Name: Ezra Adamu
 	#   Email: ezra00100@gmail.com
 	#   Date created: 10/10/2023
-   #   Date modified: 22/10/2023 
+	#   Date modified: 22/10/2023 
 
 	//auth
 	include_once( 'admin_auth.php' );
@@ -19,12 +19,12 @@
 	$js_modules = [ 'question' ];
 
 	if ( isset( $_POST[ 'get_course_topics' ] ) ) 
-   {
-	  ob_clean();
+	{
+		ob_clean();
 
 		$course_arr = $quest->getByCourseCode( [ $_POST[ 'cs_code' ] ] );
 		$course_arr_count = count( $course_arr );
-	  $course_topics = '';
+		$course_topics = '';
 		
 		//looping through
 		foreach ( $course_arr as $cs_dt )
@@ -44,47 +44,30 @@
 
 		$course_topics .= $course_topics ? 
 							'<div class="text-center mt-3">
-								<button class="btn btn-success" id="gen_question_btn"
+								<button class="btn btn-success" id="gen_questions_btn"
 								> Generate</button>
+								<a href="download" target="_blank" class="btn btn-info text-white invisible" id="print_questions_btn"
+								> Print</a>
 							</div>' : '';
 
-	  $msg = $course_topics ? $web_app->showAlertMsg( 'success', "$course_arr_count Topic(s) Found!" ) : $web_app->showAlertMsg( 'danger', "$course_arr_count Topic(s) Not Found!" );
-	  echo json_encode( [ 'msg' => $msg, 'course_topics' => $course_topics ] );
-
-	  ob_end_flush();
-	  exit();
-   }
+		$msg = $course_topics ? $web_app->showAlertMsg( 'success', "$course_arr_count Topic(s) Found!" ) : $web_app->showAlertMsg( 'danger', "$course_arr_count Topic(s) Not Found!" );
+		echo json_encode( [ 'msg' => $msg, 'course_topics' => $course_topics ] );
+		
+		ob_end_flush();
+		exit();
+	}
 	else if ( isset( $_POST[ 'gen_questions' ] ) ) 
-   {
-	  ob_clean();
-
+	{
+		ob_clean();
+		
 		$_SESSION[ 'cs_ids_arr' ] = $_POST[ 'cs_ids_arr' ] ?? [];
 		$status = count( $_SESSION[ 'cs_ids_arr' ] ) > 0 ?  true : false;
-		echo $status;
+		echo json_encode( [ 'status' => $status ] );
 		
-	  ob_end_flush();
-	  exit();
-   }
-	else if ( isset( $_SESSION[ 'cs_ids_arr' ] ) )
-	{
-		foreach ($variable as $key => $value) {
-			//get question data by id
-
-
-			//get questions id data by cs code and title
-
-			//use algo
-
-			
-			//fetch questions by ids 
-
-			//use algo on question patterns
-
-			//print
-
-			//$_SESSION[ 'cs_ids_arr' ]
-		}
+		ob_end_flush();
+		exit();
 	}
+
 	//Questions interface
 	include_once( 'views/questions.php' );
- ?>
+?>
