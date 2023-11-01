@@ -75,5 +75,22 @@
 
 			return $array;
 		}
+
+		function getByCourseCodeAndTopic( array $dt )
+	   {
+			$sql = "SELECT id FROM $this->table WHERE cs_code = ? AND topic = ?";
+			$res = $this->fetchAllData( $sql, $dt );
+			
+			return $res ?? [];
+	   }
+		
+		function getByIds( array $dt, $ids = '' )
+	   {
+			$sql = "SELECT * FROM $this->table WHERE id IN( $ids )";
+			$res = $this->fetchAllData( $sql, $dt );
+			
+			return $res ?? [];
+	   }
+
 	}
 ?>
