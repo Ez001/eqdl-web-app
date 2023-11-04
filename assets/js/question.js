@@ -34,11 +34,27 @@ const genQuestions = ( data ) => {
 
    if ( data )
    {
-      data.status ? $( `#print_questions_btn` ).removeClass( 'invisible' ) : $( `#print_questions_btn` ).addClass( 'invisible' );
+      if ( data.status )
+      {
+         $( `#print_questions_btn` ).removeClass( 'invisible' );
+      }
+      else
+      {
+         $( `#print_questions_btn` ).addClass( 'invisible' );
+         $( '#alert_msg_qt' ).html( data.msg );
+      }
+      
+      $( '#spinner' ).addClass( 'd-none' );
+      $( '#gen_questions_btn' ).removeClass( 'disabled' );
    }
 };
 
 $( document ).on( 'click', '#gen_questions_btn', ( e ) => {
+   $( '#alert_msg_qt' ).html( '' );
+   $( `#print_questions_btn` ).addClass( 'invisible' );
+   $( '#spinner' ).removeClass( 'd-none' );
+   $( '#gen_questions_btn' ).addClass( 'disabled' );
+
    //create new array
    var cs_ids_arr = [];
 

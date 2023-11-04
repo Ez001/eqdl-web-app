@@ -3,7 +3,7 @@
 	#   Name: Ezra Adamu
 	#   Email: ezra00100@gmail.com
 	#   Date created: 10/10/2023
-	#   Date modified: 22/10/2023 
+	#   Date modified: 04/11/2023 
 
 	//auth
 	include_once( 'admin_auth.php' );
@@ -44,8 +44,10 @@
 
 		$course_topics .= $course_topics ? 
 							'<div class="text-center mt-3">
+								<div id="alert_msg_qt"></div>
+
 								<button class="btn btn-success" id="gen_questions_btn"
-								> Generate</button>
+								><i id="spinner" class="spinner-border spinner-border-sm d-none"></i> Generate</button>
 								<a href="download" target="_blank" class="btn btn-info text-white invisible" id="print_questions_btn"
 								> Print</a>
 							</div>' : '';
@@ -60,9 +62,19 @@
 	{
 		ob_clean();
 		
+		$status = false;
+		$msg = $web_app->showAlertMsg( 'danger', 'Sorry, Question(s) not generated!' );
+
 		$_SESSION[ 'cs_ids_arr' ] = $_POST[ 'cs_ids_arr' ] ?? [];
-		$status = count( $_SESSION[ 'cs_ids_arr' ] ) > 0 ?  true : false;
-		echo json_encode( [ 'status' => $status ] );
+
+		if ( count( $_SESSION[ 'cs_ids_arr' ] ) > 0 )
+		{
+			$status =  true;
+			$msg = '';
+		}
+
+		sleep( 1 );
+		echo json_encode( [ 'status' => $status, 'msg' => $msg  ] );
 		
 		ob_end_flush();
 		exit();

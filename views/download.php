@@ -2,13 +2,15 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-  		<title>Questions</title>
-  		<link rel="stylesheet" type="text/css" href="<?= $cur_dir ?>/assets/css/pdf_agreement_style.css">
+  		<title><?= $course_arr[ 'title' ] . '-' . $course_arr[ 'cs_code' ] ?> Questions</title>
 	</head>
 	<body>
-		<main id="main-body">
-			<header></header>
-			<section class="pdf-content">
+		<main>
+			<header style="text-align: center;">
+				<h2><?= $course_arr[ 'title' ] . ' - ' . $course_arr[ 'cs_code' ] ?></h2>
+				<h3><?= $course_arr[ 'unit' ] ?> Units</h3>
+			</header>
+			<section>
 				<ol>
 					<?= $sel_qt_output ?>
 				</ol>

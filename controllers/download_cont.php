@@ -3,7 +3,7 @@
 	#   Name: Ezra Adamu
 	#   Email: ezra00100@gmail.com
 	#   Date created: 01/11/2023
-	#   Date modified: 01/11/2023 
+	#   Date modified: 03/11/2023 
 
 	//auth
 	include_once( 'admin_auth.php' );
@@ -14,10 +14,10 @@
 	$course = new Course();
 
 	$total_quest = $quest->getTotal( [] );
-	$course_arr = $course->getAll( [] );
 
 	$js_modules = [ 'question' ];
 	$quest_arr_print_full = [];
+	$main_cs_code = '';
 
 	if ( isset( $_SESSION[ 'cs_ids_arr' ] ) )
 	{
@@ -31,6 +31,11 @@
 			$quest_arr = $quest->getById( [ $id ] );
 			$cs_code = $quest_arr[ 'cs_code' ];
 			$topic = $quest_arr[ 'topic' ];
+
+			if ( !$main_cs_code )
+			{
+				$main_cs_code = $cs_code;
+			}
 
 			//get questions id data by cs code and title
 			$qt_ids_arr = [];
@@ -75,6 +80,8 @@
 
 		$sel_qt_output .= $qt_sel ? "<li>$qt_sel</li>" : '';
 	}
+	
+	$course_arr = $course->getByCourseCode( [ $main_cs_code ] );
 
 	//Download interface
 	include_once( 'views/download.php' );
@@ -94,12 +101,11 @@
    ob_end_clean();
    //set paper size
    //$dompdf->setPaper('A4','Landscape');
-   $dompdf->setPaper( 'A4','Portrait' );
+   $dompdf->setPaper( 'A4', 'Portrait' );
     
    //render Html to pdf
    $dompdf->render();
 
    //display to browser
-   $dompdf->stream( 'PDF-'.time(),   [ 'Attachment' => false ] );
-?>
+   $dompdf->stream( $course_arr[ 'title' ] . '-' . $course_arr[ 'cs_code' ] . time(),   [ 'Attachment' => false ] );
 ?>
