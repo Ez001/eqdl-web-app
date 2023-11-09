@@ -25,7 +25,7 @@
 
 		function getAll( array $dt )
 	   {
-			$sql = "SELECT * FROM $this->table";
+			$sql = "SELECT * FROM $this->table";//ORDER BY cs_code
 			$res = $this->fetchAllData( $sql, $dt );
 			
 			return $res ?? [];

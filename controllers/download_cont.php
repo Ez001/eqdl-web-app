@@ -3,7 +3,7 @@
 	#   Name: Ezra Adamu
 	#   Email: ezra00100@gmail.com
 	#   Date created: 01/11/2023
-	#   Date modified: 03/11/2023 
+	#   Date modified: 08/11/2023 
 
 	//auth
 	include_once( 'admin_auth.php' );
@@ -82,6 +82,12 @@
 	}
 	
 	$course_arr = $course->getByCourseCode( [ $main_cs_code ] );
+
+	if ( !$course_arr  )
+	{
+		header( 'Location: ./questions', true, 301 );
+		exit();
+	}
 
 	//Download interface
 	include_once( 'views/download.php' );
